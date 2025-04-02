@@ -10,8 +10,7 @@ import '../models/study_session.dart';
 class SubjectDetailScreen extends ConsumerWidget {
   final Subject subject;
 
-  const SubjectDetailScreen({required this.subject, Key? key})
-    : super(key: key);
+  const SubjectDetailScreen({required this.subject, super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -22,9 +21,11 @@ class SubjectDetailScreen extends ConsumerWidget {
         activeSession.isActive && activeSession.subjectId == subject.id;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        foregroundColor: Colors.white,
         title: Text(subject.name),
-        backgroundColor: Color(int.parse(subject.color)),
+        backgroundColor: Colors.black,
         actions: [
           IconButton(
             icon: const Icon(Icons.delete),
@@ -35,6 +36,7 @@ class SubjectDetailScreen extends ConsumerWidget {
       body: Column(
         children: [
           Card(
+            color: Colors.grey[900],
             margin: const EdgeInsets.all(16),
             child: Padding(
               padding: const EdgeInsets.all(16),
@@ -47,6 +49,7 @@ class SubjectDetailScreen extends ConsumerWidget {
                         const Text(
                           'Total Study Time',
                           style: TextStyle(
+                            color: Colors.white,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -60,12 +63,17 @@ class SubjectDetailScreen extends ConsumerWidget {
                               '${hours}h ${minutes}m',
                               style: const TextStyle(
                                 fontSize: 24,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             );
                           },
                           loading: () => const CircularProgressIndicator(),
-                          error: (_, __) => const Text('Error'),
+                          error:
+                              (_, __) => const Text(
+                                'Error',
+                                style: TextStyle(color: Colors.white),
+                              ),
                         ),
                       ],
                     ),
@@ -78,19 +86,25 @@ class SubjectDetailScreen extends ConsumerWidget {
                       onPressed: () {
                         _showStopSessionDialog(context, ref);
                       },
-                      child: const Text('Stop Studying'),
+                      child: const Text(
+                        'Stop Studying',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     )
                   else
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: const Color.fromARGB(255, 56, 56, 56),
                       ),
                       onPressed: () {
                         ref
                             .read(activeStudySessionProvider.notifier)
                             .startSession(subject.id);
                       },
-                      child: const Text('Start Studying'),
+                      child: const Text(
+                        'Start Studying',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                 ],
               ),

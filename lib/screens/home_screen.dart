@@ -1,5 +1,6 @@
 // File: lib/screens/home_screen.dart
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:time_chhaina/providers/provider.dart';
@@ -80,10 +81,14 @@ class HomeScreen extends ConsumerWidget {
         error: (error, _) => Center(child: Text('Error: $error')),
       ),
       floatingActionButton: FloatingActionButton(
+        elevation: 4,
+        shape: const CircleBorder(),
+        backgroundColor: const Color.fromARGB(255, 69, 69, 69),
+        foregroundColor: Colors.white,
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AddSubjectScreen()),
+            CupertinoPageRoute(builder: (context) => const AddSubjectScreen()),
           );
         },
         child: const Icon(Icons.add),
@@ -107,6 +112,7 @@ class SubjectListTile extends ConsumerWidget {
     final totalStudyTimeAsync = ref.watch(totalStudyTimeProvider(subject.id));
 
     return Card(
+      color: const Color.fromARGB(255, 80, 80, 80),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: InkWell(
         onTap: () {
@@ -139,6 +145,7 @@ class SubjectListTile extends ConsumerWidget {
                       style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 4),
@@ -148,7 +155,7 @@ class SubjectListTile extends ConsumerWidget {
                         final minutes = totalMinutes % 60;
                         return Text(
                           'Total: ${hours}h ${minutes}m',
-                          style: TextStyle(color: Colors.grey[600]),
+                          style: TextStyle(color: Colors.white),
                         );
                       },
                       loading: () => const Text('Calculating...'),
@@ -163,7 +170,10 @@ class SubjectListTile extends ConsumerWidget {
                   onPressed: () {
                     _showStopSessionDialog(context, ref);
                   },
-                  child: const Text('Stop'),
+                  child: const Text(
+                    'Stop',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 )
               else
                 ElevatedButton(
@@ -175,7 +185,10 @@ class SubjectListTile extends ConsumerWidget {
                         .read(activeStudySessionProvider.notifier)
                         .startSession(subject.id);
                   },
-                  child: const Text('Start'),
+                  child: const Text(
+                    'Start',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
             ],
           ),
